@@ -1,0 +1,28 @@
+stages:
+  generate_data:
+    cmd: python backend/ml/generate_data.py
+    deps:
+      - backend/ml/generate_data.py
+    outs:
+      - data/raw/transactions.csv
+      - data/processed/transactions_processed.csv
+    metrics:
+      - metrics.json:
+          cache: false
+    plots:
+      - plots:
+          cache: false
+
+  train_model:
+    cmd: python backend/ml/train.py
+    deps:
+      - data/processed/transactions_processed.csv
+      - backend/ml/train.py
+    outs:
+      - data/models/fraud_detection_model.pkl
+    metrics:
+      - metrics.json:
+          cache: false
+    plots:
+      - plots:
+          cache: false 
